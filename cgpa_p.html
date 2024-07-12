@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Percentage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .semester {
+            margin-bottom: 10px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            width: 60px;
+            margin-right: 20px;
+        }
+        button {
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CGPA Percentage Calculator</h1>
+    <div id="semesters">
+        <div class="semester">
+            <label for="marksScored1">Semester 1 Marks Scored:</label>
+            <input type="number" id="marksScored1" min="0">
+            <label for="totalMarks1">Total Marks:</label>
+            <input type="number" id="totalMarks1" min="0">
+            <label for="credits1">Credits:</label>
+            <input type="number" id="credits1" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored2">Semester 2 Marks Scored:</label>
+            <input type="number" id="marksScored2" min="0">
+            <label for="totalMarks2">Total Marks:</label>
+            <input type="number" id="totalMarks2" min="0">
+            <label for="credits2">Credits:</label>
+            <input type="number" id="credits2" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored3">Semester 3 Marks Scored:</label>
+            <input type="number" id="marksScored3" min="0">
+            <label for="totalMarks3">Total Marks:</label>
+            <input type="number" id="totalMarks3" min="0">
+            <label for="credits3">Credits:</label>
+            <input type="number" id="credits3" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored4">Semester 4 Marks Scored:</label>
+            <input type="number" id="marksScored4" min="0">
+            <label for="totalMarks4">Total Marks:</label>
+            <input type="number" id="totalMarks4" min="0">
+            <label for="credits4">Credits:</label>
+            <input type="number" id="credits4" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored5">Semester 5 Marks Scored:</label>
+            <input type="number" id="marksScored5" min="0">
+            <label for="totalMarks5">Total Marks:</label>
+            <input type="number" id="totalMarks5" min="0">
+            <label for="credits5">Credits:</label>
+            <input type="number" id="credits5" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored6">Semester 6 Marks Scored:</label>
+            <input type="number" id="marksScored6" min="0">
+            <label for="totalMarks6">Total Marks:</label>
+            <input type="number" id="totalMarks6" min="0">
+            <label for="credits6">Credits:</label>
+            <input type="number" id="credits6" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored7">Semester 7 Marks Scored:</label>
+            <input type="number" id="marksScored7" min="0">
+            <label for="totalMarks7">Total Marks:</label>
+            <input type="number" id="totalMarks7" min="0">
+            <label for="credits7">Credits:</label>
+            <input type="number" id="credits7" min="0">
+        </div>
+        <div class="semester">
+            <label for="marksScored8">Semester 8 Marks Scored:</label>
+            <input type="number" id="marksScored8" min="0">
+            <label for="totalMarks8">Total Marks:</label>
+            <input type="number" id="totalMarks8" min="0">
+            <label for="credits8">Credits:</label>
+            <input type="number" id="credits8" min="0">
+        </div>
+    </div>
+    <button onclick="calculateCGPAPercentage()">Calculate CGPA Percentage</button>
+    <div id="result"></div>
+
+    <script>
+        function calculateCGPAPercentage() {
+            let totalCredits = 0;
+            let totalWeightedPercentage = 0;
+
+            for (let i = 1; i <= 8; i++) {
+                let marksScored = parseFloat(document.getElementById('marksScored' + i).value);
+                let totalMarks = parseFloat(document.getElementById('totalMarks' + i).value);
+                let credits = parseFloat(document.getElementById('credits' + i).value);
+
+                if (!isNaN(marksScored) && !isNaN(totalMarks) && !isNaN(credits)) {
+                    let percentage = marksScored / totalMarks;
+                    totalWeightedPercentage += percentage * credits;
+                    totalCredits += credits;
+                }
+            }
+
+            let cgpaPercentage = (totalWeightedPercentage / totalCredits) * 100;
+            if (!isNaN(cgpaPercentage)) {
+                document.getElementById('result').innerText = 'Your CGPA Percentage is: ' + cgpaPercentage.toFixed(2) + '%';
+            } else {
+                document.getElementById('result').innerText = 'Please enter valid inputs for all semesters.';
+            }
+        }
+    </script>
+</body>
+</html>
