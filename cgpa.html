@@ -101,7 +101,9 @@
 
             let cgpa = totalWeightedGPA / totalCredits;
             if (!isNaN(cgpa)) {
-                document.getElementById('result').innerText = 'Your CGPA is: ' + cgpa.toFixed(2);
+                const cgpaPercentage = (cgpa - 0.5) * 10;
+                document.getElementById('result').innerHTML = 
+                `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
             } else {
                 document.getElementById('result').innerText = 'Please enter valid inputs for all semesters.';
             }
