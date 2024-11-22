@@ -30,72 +30,73 @@
 </head>
 <body>
     <h1>CGPA Calculator</h1>
+    <div>
+        <label for="lateralEntry">Are you a lateral entry student?</label>
+        <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()">
+    </div>
     <div id="semesters">
         <div class="semester">
-            <label for="credits1">Semester 1 Credits:</label>
-            <input type="number" id="credits1" min="0">
-            <label for="gpa1">GPA:</label>
+            <label for="gpa1">Semester 1 GPA:</label>
             <input type="number" id="gpa1" step="0.01" min="0" max="10">
         </div>
         <div class="semester">
-            <label for="credits2">Semester 2 Credits:</label>
-            <input type="number" id="credits2" min="0">
-            <label for="gpa2">GPA:</label>
+            <label for="gpa2">Semester 2 GPA:</label>
             <input type="number" id="gpa2" step="0.01" min="0" max="10">
         </div>
         <div class="semester">
-            <label for="credits3">Semester 3 Credits:</label>
-            <input type="number" id="credits3" min="0">
-            <label for="gpa3">GPA:</label>
+            <label for="gpa3">Semester 3 GPA:</label>
             <input type="number" id="gpa3" step="0.01" min="0" max="10">
         </div>
         <div class="semester">
-            <label for="credits4">Semester 4 Credits:</label>
-            <input type="number" id="credits4" min="0">
-            <label for="gpa4">GPA:</label>
+            <label for="gpa4">Semester 4 GPA:</label>
             <input type="number" id="gpa4" step="0.01" min="0" max="10">
         </div>
         <div class="semester">
-            <label for="credits5">Semester 5 Credits:</label>
-            <input type="number" id="credits5" min="0">
-            <label for="gpa5">GPA:</label>
+            <label for="gpa5">Semester 5 GPA:</label>
             <input type="number" id="gpa5" step="0.01" min="0" max="10">
         </div>
         <div class="semester">
-            <label for="credits6">Semester 6 Credits:</label>
-            <input type="number" id="credits6" min="0">
-            <label for="gpa6">GPA:</label>
+            <label for="gpa6">Semester 6 GPA:</label>
             <input type="number" id="gpa6" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="credits7">Semester 7 Credits:</label>
-            <input type="number" id="credits7" min="0">
-            <label for="gpa7">GPA:</label>
-            <input type="number" id="gpa7" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="credits8">Semester 8 Credits:</label>
-            <input type="number" id="credits8" min="0">
-            <label for="gpa8">GPA:</label>
-            <input type="number" id="gpa8" step="0.01" min="0" max="10">
         </div>
     </div>
     <button onclick="calculateCGPA()">Calculate CGPA</button>
     <div id="result"></div>
 
     <script>
+        // Fixed credits for each semester
+        const credits = [20, 20, 20, 23, 20, 20];
+
+        function toggleLateralEntry() {
+            const isLateralEntry = document.getElementById('lateralEntry').checked;
+            
+            // Disable/Enable GPA fields for Semesters 1 and 2
+            document.getElementById('gpa1').disabled = isLateralEntry;
+            document.getElementById('gpa2').disabled = isLateralEntry;
+
+            // Clear values for Semesters 1 and 2 if disabled
+            if (isLateralEntry) {
+                document.getElementById('gpa1').value = '';
+                document.getElementById('gpa2').value = '';
+            }
+        }
+
         function calculateCGPA() {
+            const isLateralEntry = document.getElementById('lateralEntry').checked;
             let totalCredits = 0;
             let totalWeightedGPA = 0;
 
-            for (let i = 1; i <= 8; i++) {
-                let credits = parseFloat(document.getElementById('credits' + i).value);
-                let gpa = parseFloat(document.getElementById('gpa' + i).value);
-
-                if (!isNaN(credits) && !isNaN(gpa)) {
-                    totalCredits += credits;
-                    totalWeightedGPA += credits * gpa;
+            for (let i = 1; i <= 6; i++) {
+                // Skip Semesters 1 and 2 for lateral entry students
+                if (isLateralEntry && (i === 1 || i === 2)) {
+                    continue;
                 }
+
+                // Get GPA and default to 0 if empty
+                let gpa = parseFloat(document.getElementById('gpa' + i).value) || 0;
+
+                totalCredits += credits[i - 1];
+                totalWeightedGPA += credits[i - 1] * gpa;
             }
 
             let cgpa = totalWeightedGPA / totalCredits;
