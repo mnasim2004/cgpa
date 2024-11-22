@@ -4,96 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            font-size: 1.5em;
-            text-align: center;
-        }
-        .semester {
-            margin-bottom: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        label {
-            margin-right: 10px;
-            flex: 1;
-            min-width: 120px;
-        }
-        input[type="number"] {
-            width: 100%;
-            max-width: 100px;
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            font-size: 1em;
-            width: 100%;
-            max-width: 200px;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
-        @media (max-width: 600px) {
-            body {
-                margin: 10px;
-            }
-            .semester {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            label {
-                margin-bottom: 5px;
-                flex: none;
-            }
-            button {
-                font-size: 0.9em;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>CGPA Calculator</h1>
-    <div>
-        <label for="lateralEntry">Are you a lateral entry student?</label>
-        <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()">
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5">
+    <div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">
+        <h1 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">CGPA Calculator</h1>
+        <div class="mb-6 flex items-center gap-4">
+            <label for="lateralEntry" class="text-base font-medium text-gray-700 flex-shrink-0">Lateral Entry Student?</label>
+            <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()" class="w-6 h-6 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2">
+        </div>
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-x-8 gap-y-6">
+            <div class="relative">
+                <input type="number" id="gpa1" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 1 GPA">
+            </div>
+            <div class="relative">
+                <input type="number" id="gpa2" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 2 GPA">
+            </div>
+            <div class="relative">
+                <input type="number" id="gpa3" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 3 GPA">
+            </div>
+            <div class="relative">
+                <input type="number" id="gpa4" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 4 GPA">
+            </div>
+            <div class="relative">
+                <input type="number" id="gpa5" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 5 GPA">
+            </div>
+            <div class="relative">
+                <input type="number" id="gpa6" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 6 GPA">
+            </div>
+        </div>
+        <div class="mt-6 flex justify-center">
+            <button onclick="calculateCGPA()" 
+                class="w-52 h-12 bg-indigo-600 hover:bg-indigo-800 text-white text-base font-semibold rounded-full shadow-xs transition-all duration-300">
+                Calculate CGPA
+            </button>
+        </div>
+        <div id="result" class="mt-8 text-center text-lg font-medium text-gray-800"></div>
     </div>
-    <div id="semesters">
-        <div class="semester">
-            <label for="gpa1">Semester 1 GPA:</label>
-            <input type="number" id="gpa1" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="gpa2">Semester 2 GPA:</label>
-            <input type="number" id="gpa2" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="gpa3">Semester 3 GPA:</label>
-            <input type="number" id="gpa3" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="gpa4">Semester 4 GPA:</label>
-            <input type="number" id="gpa4" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="gpa5">Semester 5 GPA:</label>
-            <input type="number" id="gpa5" step="0.01" min="0" max="10">
-        </div>
-        <div class="semester">
-            <label for="gpa6">Semester 6 GPA:</label>
-            <input type="number" id="gpa6" step="0.01" min="0" max="10">
-        </div>
-    </div>
-    <button onclick="calculateCGPA()">Calculate CGPA</button>
-    <div id="result"></div>
 
     <script>
         // Fixed credits for each semester
