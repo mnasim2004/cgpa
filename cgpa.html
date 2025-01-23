@@ -1,104 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGPA Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5">
-    <div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">
-        <h1 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">CGPA Calculator</h1>
-        <div class="mb-6 flex items-center gap-4">
-            <label for="lateralEntry" class="text-base font-medium text-gray-700 flex-shrink-0">Lateral Entry Student?</label>
-            <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()" class="w-6 h-6 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2">
-        </div>
-        <div class="grid md:grid-cols-2 grid-cols-1 gap-x-8 gap-y-6">
-            <div class="relative">
-                <input type="number" id="gpa1" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 1 GPA">
-            </div>
-            <div class="relative">
-                <input type="number" id="gpa2" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 2 GPA">
-            </div>
-            <div class="relative">
-                <input type="number" id="gpa3" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 3 GPA">
-            </div>
-            <div class="relative">
-                <input type="number" id="gpa4" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 4 GPA">
-            </div>
-            <div class="relative">
-                <input type="number" id="gpa5" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 5 GPA">
-            </div>
-            <div class="relative">
-                <input type="number" id="gpa6" step="0.01" min="0" max="10" 
-                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-                    placeholder="Semester 6 GPA">
-            </div>
-        </div>
-        <div class="mt-6 flex justify-center">
-            <button onclick="calculateCGPA()" 
-                class="w-52 h-12 bg-indigo-600 hover:bg-indigo-800 text-white text-base font-semibold rounded-full shadow-xs transition-all duration-300">
-                Calculate CGPA
-            </button>
-        </div>
-        <div id="result" class="mt-8 text-center text-lg font-medium text-gray-800"></div>
-    </div>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+  <meta charset="UTF-8">     
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+  <title>CGPA Calculator</title>     
+  <script src="https://cdn.tailwindcss.com"></script> 
+</head> 
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5">     
+  <div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">         
+    <h1 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">CGPA Calculator</h1>         
+    <div class="mb-6 flex items-center gap-4">             
+      <label for="lateralEntry" class="text-base font-medium text-gray-700 flex-shrink-0">Lateral Entry Student?</label>             
+      <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()" class="w-6 h-6 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2">         
+    </div>         
+    <div class="grid md:grid-cols-2 grid-cols-1 gap-x-8 gap-y-6">             
+      <div class="relative">                 
+        <input type="number" id="gpa1" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 1 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa2" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 2 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa3" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 3 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa4" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 4 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa5" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 5 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa6" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 6 GPA">             
+      </div>             
+      <div class="relative">                 
+        <input type="number" id="gpa7" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 7 GPA">             
+      </div>         
+    </div>         
+    <div class="mt-6 flex justify-center">             
+      <button onclick="calculateCGPA()"                  class="w-52 h-12 bg-indigo-600 hover:bg-indigo-800 text-white text-base font-semibold rounded-full shadow-xs transition-all duration-300">                 
+        Calculate CGPA             
+      </button>         
+    </div>         
+    <div id="result" class="mt-8 text-center text-lg font-medium text-gray-800"></div>     
+  </div>      
 
-    <script>
-        // Fixed credits for each semester
-        const credits = [20, 20, 20, 23, 20, 20];
+  <script>         
+    // Fixed credits for each semester         
+    const credits = [20, 20, 20, 23, 20, 20, 20];          
 
-        function toggleLateralEntry() {
-            const isLateralEntry = document.getElementById('lateralEntry').checked;
-            
-            // Disable/Enable GPA fields for Semesters 1 and 2
-            document.getElementById('gpa1').disabled = isLateralEntry;
-            document.getElementById('gpa2').disabled = isLateralEntry;
+    function toggleLateralEntry() {             
+      const isLateralEntry = document.getElementById('lateralEntry').checked;                          
+      // Disable/Enable GPA fields for Semesters 1 and 2             
+      document.getElementById('gpa1').disabled = isLateralEntry;             
+      document.getElementById('gpa2').disabled = isLateralEntry;              
 
-            // Clear values for Semesters 1 and 2 if disabled
-            if (isLateralEntry) {
-                document.getElementById('gpa1').value = '';
-                document.getElementById('gpa2').value = '';
-            }
-        }
+      // Clear values for Semesters 1 and 2 if disabled             
+      if (isLateralEntry) {                 
+        document.getElementById('gpa1').value = '';                 
+        document.getElementById('gpa2').value = '';             
+      }         
+    }          
 
-        function calculateCGPA() {
-            const isLateralEntry = document.getElementById('lateralEntry').checked;
-            let totalCredits = 0;
-            let totalWeightedGPA = 0;
+    function calculateCGPA() {             
+      const isLateralEntry = document.getElementById('lateralEntry').checked;             
+      let totalCredits = 0;             
+      let totalWeightedGPA = 0;              
 
-            for (let i = 1; i <= 6; i++) {
-                // Skip Semesters 1 and 2 for lateral entry students
-                if (isLateralEntry && (i === 1 || i === 2)) {
-                    continue;
-                }
+      for (let i = 1; i <= 7; i++) {                 
+        // Skip Semesters 1 and 2 for lateral entry students                 
+        if (isLateralEntry && (i === 1 || i === 2)) {                     
+          continue;                 
+        }                  
 
-                // Get GPA and default to 0 if empty
-                let gpa = parseFloat(document.getElementById('gpa' + i).value) || 0;
+        // Get GPA and default to 0 if empty                 
+        let gpa = parseFloat(document.getElementById('gpa' + i).value) || 0;                  
+        totalCredits += credits[i - 1];                 
+        totalWeightedGPA += credits[i - 1] * gpa;             
+      }              
 
-                totalCredits += credits[i - 1];
-                totalWeightedGPA += credits[i - 1] * gpa;
-            }
+      let cgpa = totalWeightedGPA / totalCredits;             
 
-            let cgpa = totalWeightedGPA / totalCredits;
-            if (!isNaN(cgpa)) {
-                const cgpaPercentage = (cgpa - 0.5) * 10;
-                document.getElementById('result').innerHTML = 
-                `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
-            } else {
-                document.getElementById('result').innerText = 'Please enter valid inputs for all semesters.';
-            }
-        }
-    </script>
-</body>
+      if (!isNaN(cgpa)) {                 
+        const cgpaPercentage = (cgpa - 0.5) * 10;                 
+        document.getElementById('result').innerHTML =                  
+          `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;             
+      } else {                 
+        document.getElementById('result').innerText = 'Please enter valid inputs for all semesters.';             
+      }         
+    }     
+  </script> 
+</body> 
 </html>
