@@ -44,6 +44,11 @@
                     class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                     placeholder="Semester 6 GPA">
             </div>
+            <div class="relative">
+                <input type="number" id="gpa7" step="0.01" min="0" max="10" 
+                    class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Semester 7 GPA">
+            </div>
         </div>
         <div class="mt-6 flex justify-center">
             <button onclick="calculateCGPA()" 
@@ -55,8 +60,8 @@
     </div>
 
     <script>
-        // Fixed credits for each semester
-        const credits = [20, 20, 20, 23, 20, 20];
+        // Fixed credits for each semester (now includes 7 semesters)
+        const credits = [20, 20, 20, 23, 20, 20, 20];
 
         function toggleLateralEntry() {
             const isLateralEntry = document.getElementById('lateralEntry').checked;
@@ -77,7 +82,7 @@
             let totalCredits = 0;
             let totalWeightedGPA = 0;
 
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= 7; i++) {
                 // Skip Semesters 1 and 2 for lateral entry students
                 if (isLateralEntry && (i === 1 || i === 2)) {
                     continue;
