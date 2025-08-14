@@ -29,9 +29,16 @@
       </div>
     </div>
 
+    <!-- Step 2.1: Specify backlog semesters -->
+    <div id="step2a" class="space-y-6 hidden">
+      <label class="block text-base font-medium text-gray-700">Enter backlog semesters (comma-separated, e.g., 3,5)</label>
+      <input type="text" id="backlogSems" class="block w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter semesters">
+      <button onclick="validateBacklogs()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-800 text-white py-3 rounded-lg">Next</button>
+    </div>
+
     <!-- Step 3: Semesters completed -->
     <div id="step3" class="space-y-6 hidden">
-      <label for="completedSems" class="block text-base font-medium text-gray-700">How many semesters have you completed?</label>
+      <label for="completedSems" class="block text-base font-medium text-gray-700">Till which semester have you completed?</label>
       <input type="number" id="completedSems" min="1" max="8" class="block w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter number (1–8)">
       <button onclick="goToMarks()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-800 text-white py-3 rounded-lg">Next</button>
     </div>
@@ -50,6 +57,7 @@
     const credits = [20, 20, 20, 23, 20, 20, 20, 20];
     let isLateralEntry = false;
     let hasBacklog = false;
+    let backlogSemesters = [];
     let completedSemesters = 0;
 
     function setLateral(value) {
@@ -61,6 +69,32 @@
     function setBacklog(value) {
       hasBacklog = value;
       document.getElementById("step2").classList.add("hidden");
+      if (value) {
+        document.getElementById("step2a").classList.remove("hidden");
+      } else {
+        document.getElementById("step3").classList.remove("hidden");
+      }
+    }
+
+    function validateBacklogs() {
+      let input = document.getElementById("backlogSems").value.trim();
+      if (!input) {
+        alert("Please enter backlog semesters.");
+        return;
+      }
+      backlogSemesters = input.split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+
+      // Check for invalid backlog entries
+      if (backlogSemesters.some(s => s < 1 || s > 8)) {
+        alert("Invalid semester number in backlog list.");
+        return;
+      }
+      if (isLateralEntry && backlogSemesters.some(s => s === 1 || s === 2)) {
+        alert("Lateral entry students cannot have backlog in semester 1 or 2.");
+        return;
+      }
+
+      document.getElementById("step2a").classList.add("hidden");
       document.getElementById("step3").classList.remove("hidden");
     }
 
@@ -68,6 +102,10 @@
       completedSemesters = parseInt(document.getElementById("completedSems").value) || 0;
       if (completedSemesters < 1 || completedSemesters > 8) {
         alert("Please enter a valid number of completed semesters (1–8).");
+        return;
+      }
+      if (isLateralEntry && completedSemesters < 3) {
+        alert("Lateral entry students start from semester 3.");
         return;
       }
 
@@ -79,6 +117,7 @@
 
       for (let i = 1; i <= completedSemesters; i++) {
         if (isLateralEntry && (i === 1 || i === 2)) continue;
+        if (backlogSemesters.includes(i)) continue;
 
         const inputDiv = document.createElement("div");
         inputDiv.className = "relative";
@@ -97,24 +136,24 @@
 
       for (let i = 1; i <= completedSemesters; i++) {
         if (isLateralEntry && (i === 1 || i === 2)) continue;
+        if (backlogSemesters.includes(i)) continue;
 
         let gpaValue = parseFloat(document.getElementById(`gpa${i}`)?.value);
-        if (isNaN(gpaValue)) continue; // Skip if backlog or marks not entered yet
+        if (isNaN(gpaValue)) {
+          alert(`Please enter GPA for Semester ${i}.`);
+          return;
+        }
 
         totalCredits += credits[i - 1];
         totalWeightedGPA += credits[i - 1] * gpaValue;
       }
 
       let cgpa = totalWeightedGPA / totalCredits;
+      const cgpaPercentage = (cgpa - 0.5) * 10;
 
-      if (!isNaN(cgpa) && totalCredits > 0) {
-        const cgpaPercentage = (cgpa - 0.5) * 10;
-        document.getElementById("result").classList.remove("hidden");
-        document.getElementById("result").innerHTML =
-          `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
-      } else {
-        alert("Please enter GPA values for completed semesters.");
-      }
+      document.getElementById("result").classList.remove("hidden");
+      document.getElementById("result").innerHTML =
+        `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
     }
   </script>
 
