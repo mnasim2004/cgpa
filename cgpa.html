@@ -131,30 +131,36 @@
     }
 
     function calculateCGPA() {
-      let totalCredits = 0;
-      let totalWeightedGPA = 0;
+  let totalCredits = 0;
+  let totalWeightedGPA = 0;
 
-      for (let i = 1; i <= completedSemesters; i++) {
-        if (isLateralEntry && (i === 1 || i === 2)) continue;
-        if (backlogSemesters.includes(i)) continue;
+  for (let i = 1; i <= completedSemesters; i++) {
+    if (isLateralEntry && (i === 1 || i === 2)) continue;
 
-        let gpaValue = parseFloat(document.getElementById(`gpa${i}`)?.value);
-        if (isNaN(gpaValue)) {
-          alert(`Please enter GPA for Semester ${i}.`);
-          return;
-        }
+    let gpaValue;
 
-        totalCredits += credits[i - 1];
-        totalWeightedGPA += credits[i - 1] * gpaValue;
+    if (backlogSemesters.includes(i)) {
+      // Backlog semester: GPA is treated as 0 for now
+      gpaValue = 0;
+    } else {
+      gpaValue = parseFloat(document.getElementById(`gpa${i}`)?.value);
+      if (isNaN(gpaValue)) {
+        alert(`Please enter GPA for Semester ${i}.`);
+        return;
       }
-
-      let cgpa = totalWeightedGPA / totalCredits;
-      const cgpaPercentage = (cgpa - 0.5) * 10;
-
-      document.getElementById("result").classList.remove("hidden");
-      document.getElementById("result").innerHTML =
-        `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
     }
+
+    totalCredits += credits[i - 1];
+    totalWeightedGPA += credits[i - 1] * gpaValue;
+  }
+
+  let cgpa = totalWeightedGPA / totalCredits;
+  const cgpaPercentage = (cgpa - 0.5) * 10;
+
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("result").innerHTML =
+    `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
+}
   </script>
 
 </body>
