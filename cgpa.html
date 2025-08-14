@@ -1,96 +1,122 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head>     
-  <meta charset="UTF-8">     
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-  <title>CGPA Calculator</title>     
-  <script src="https://cdn.tailwindcss.com"></script> 
-</head> 
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5">     
-  <div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">         
-    <h1 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">CGPA Calculator</h1>         
-    <div class="mb-6 flex items-center gap-4">             
-      <label for="lateralEntry" class="text-base font-medium text-gray-700 flex-shrink-0">Lateral Entry Student?</label>             
-      <input type="checkbox" id="lateralEntry" onchange="toggleLateralEntry()" class="w-6 h-6 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2">         
-    </div>         
-    <div class="grid md:grid-cols-2 grid-cols-1 gap-x-8 gap-y-6">             
-      <div class="relative">                 
-        <input type="number" id="gpa1" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 1 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa2" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 2 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa3" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 3 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa4" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 4 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa5" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 5 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa6" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 6 GPA">             
-      </div>             
-      <div class="relative">                 
-        <input type="number" id="gpa7" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 7 GPA">             
-      </div>        
-            <div class="relative">                 
-        <input type="number" id="gpa8" step="0.01" min="0" max="10"                      class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base font-normal shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"                      placeholder="Semester 8 GPA">             
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CGPA Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5">
+
+  <div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">
+    <h1 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">CGPA Calculator</h1>
+
+    <!-- Step 1: Lateral Entry -->
+    <div id="step1" class="space-y-6">
+      <label class="block text-base font-medium text-gray-700">Are you a Lateral Entry student?</label>
+      <div class="flex gap-4">
+        <button onclick="setLateral(true)" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-800 text-white rounded-full">Yes</button>
+        <button onclick="setLateral(false)" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-full">No</button>
       </div>
-    </div>         
-    <div class="mt-6 flex justify-center">             
-      <button onclick="calculateCGPA()"                  class="w-52 h-12 bg-indigo-600 hover:bg-indigo-800 text-white text-base font-semibold rounded-full shadow-xs transition-all duration-300">                 
-        Calculate CGPA             
-      </button>         
-    </div>         
-    <div id="result" class="mt-8 text-center text-lg font-medium text-gray-800"></div>     
-  </div>      
+    </div>
 
-  <script>         
-    // Fixed credits for each semester         
-    const credits = [20, 20, 20, 23, 20, 20, 20,20];          
+    <!-- Step 2: Backlog -->
+    <div id="step2" class="space-y-6 hidden">
+      <label class="block text-base font-medium text-gray-700">Do you have any backlogs?</label>
+      <div class="flex gap-4">
+        <button onclick="setBacklog(true)" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-800 text-white rounded-full">Yes</button>
+        <button onclick="setBacklog(false)" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-full">No</button>
+      </div>
+    </div>
 
-    function toggleLateralEntry() {             
-      const isLateralEntry = document.getElementById('lateralEntry').checked;                          
-      // Disable/Enable GPA fields for Semesters 1 and 2             
-      document.getElementById('gpa1').disabled = isLateralEntry;             
-      document.getElementById('gpa2').disabled = isLateralEntry;              
+    <!-- Step 3: Semesters completed -->
+    <div id="step3" class="space-y-6 hidden">
+      <label for="completedSems" class="block text-base font-medium text-gray-700">How many semesters have you completed?</label>
+      <input type="number" id="completedSems" min="1" max="8" class="block w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter number (1–8)">
+      <button onclick="goToMarks()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-800 text-white py-3 rounded-lg">Next</button>
+    </div>
 
-      // Clear values for Semesters 1 and 2 if disabled             
-      if (isLateralEntry) {                 
-        document.getElementById('gpa1').value = '';                 
-        document.getElementById('gpa2').value = '';             
-      }         
-    }          
+    <!-- Step 4: GPA input -->
+    <div id="step4" class="space-y-6 hidden">
+      <div id="marksContainer" class="grid md:grid-cols-2 gap-x-8 gap-y-6"></div>
+      <button onclick="calculateCGPA()" class="mt-4 w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg">Calculate CGPA</button>
+    </div>
 
-    function calculateCGPA() {             
-      const isLateralEntry = document.getElementById('lateralEntry').checked;             
-      let totalCredits = 0;             
-      let totalWeightedGPA = 0;              
+    <!-- Result -->
+    <div id="result" class="mt-8 text-center text-lg font-medium text-gray-800 hidden"></div>
+  </div>
 
-      for (let i = 1; i <= 8; i++) {                 
-        // Skip Semesters 1 and 2 for lateral entry students                 
-        if (isLateralEntry && (i === 1 || i === 2)) {                     
-          continue;                 
-        }                  
+  <script>
+    const credits = [20, 20, 20, 23, 20, 20, 20, 20];
+    let isLateralEntry = false;
+    let hasBacklog = false;
+    let completedSemesters = 0;
 
-        // Get GPA and default to 0 if empty                 
-        let gpa = parseFloat(document.getElementById('gpa' + i).value) || 0;                  
-        totalCredits += credits[i - 1];                 
-        totalWeightedGPA += credits[i - 1] * gpa;             
-      }              
+    function setLateral(value) {
+      isLateralEntry = value;
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+    }
 
-      let cgpa = totalWeightedGPA / totalCredits;             
+    function setBacklog(value) {
+      hasBacklog = value;
+      document.getElementById("step2").classList.add("hidden");
+      document.getElementById("step3").classList.remove("hidden");
+    }
 
-      if (!isNaN(cgpa)) {                 
-        const cgpaPercentage = (cgpa - 0.5) * 10;                 
-        document.getElementById('result').innerHTML =                  
-          `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;             
-      } else {                 
-        document.getElementById('result').innerText = 'Please enter valid inputs for all semesters.';             
-      }         
-    }     
-  </script> 
-</body> 
+    function goToMarks() {
+      completedSemesters = parseInt(document.getElementById("completedSems").value) || 0;
+      if (completedSemesters < 1 || completedSemesters > 8) {
+        alert("Please enter a valid number of completed semesters (1–8).");
+        return;
+      }
+
+      document.getElementById("step3").classList.add("hidden");
+      document.getElementById("step4").classList.remove("hidden");
+
+      const container = document.getElementById("marksContainer");
+      container.innerHTML = "";
+
+      for (let i = 1; i <= completedSemesters; i++) {
+        if (isLateralEntry && (i === 1 || i === 2)) continue;
+
+        const inputDiv = document.createElement("div");
+        inputDiv.className = "relative";
+        inputDiv.innerHTML = `
+          <input type="number" id="gpa${i}" step="0.01" min="0" max="10"
+            class="block w-full h-12 px-5 py-2 bg-white text-gray-900 text-base shadow-xs border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Semester ${i} GPA">
+        `;
+        container.appendChild(inputDiv);
+      }
+    }
+
+    function calculateCGPA() {
+      let totalCredits = 0;
+      let totalWeightedGPA = 0;
+
+      for (let i = 1; i <= completedSemesters; i++) {
+        if (isLateralEntry && (i === 1 || i === 2)) continue;
+
+        let gpaValue = parseFloat(document.getElementById(`gpa${i}`)?.value);
+        if (isNaN(gpaValue)) continue; // Skip if backlog or marks not entered yet
+
+        totalCredits += credits[i - 1];
+        totalWeightedGPA += credits[i - 1] * gpaValue;
+      }
+
+      let cgpa = totalWeightedGPA / totalCredits;
+
+      if (!isNaN(cgpa) && totalCredits > 0) {
+        const cgpaPercentage = (cgpa - 0.5) * 10;
+        document.getElementById("result").classList.remove("hidden");
+        document.getElementById("result").innerHTML =
+          `Your CGPA is: ${cgpa.toFixed(2)}<br>Your CGPA Percentage is: ${cgpaPercentage.toFixed(2)}%`;
+      } else {
+        alert("Please enter GPA values for completed semesters.");
+      }
+    }
+  </script>
+
+</body>
 </html>
